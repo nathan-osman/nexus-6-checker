@@ -18,6 +18,6 @@ Assuming you have `pip` installed, you can simply run the following command to i
 
 Usage is relatively straightforward:
 
-    nexus6checker.py [--interval SECONDS] [--debug] CHANNEL ACCESS_TOKEN
+    checker.py [--interval SECONDS] [--debug] CHANNEL ACCESS_TOKEN
 
 Use the `--help` switch to find out more about each parameter.
