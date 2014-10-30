@@ -18,6 +18,6 @@ Assuming you have `pip` installed, you can simply run the following command to i
 
 Usage is relatively straightforward:
 
-    checker.py [--interval SECONDS] [--debug] CHANNEL ACCESS_TOKEN
+    python checker.py [--interval SECONDS] [--debug] CHANNEL ACCESS_TOKEN
 
 Use the `--help` switch to find out more about each parameter.
