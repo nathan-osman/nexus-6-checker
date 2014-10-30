@@ -40,7 +40,7 @@ class Nexus6Checker:
             for name, id in self.STORE_PRODUCT_IDS.items():
                 self._logger.debug('Checking %s...', name)
                 old = self._inventory.get(id, None)
-                new = self._check_product_inventory(id)
+                new = self._check_product_inventory(id).strip()
                 if old is not None and old != new:
                     self._logger.info('Change detected in %s!', name)
                     self._push_message(
@@ -65,9 +65,9 @@ class Nexus6Checker:
         """
         Push the specified message to the Pushbullet channel.
         """
-        auth = requests.auth.HTTPBasicAuth(self._token, '')
+        auth = requests.auth.HTTPBasicAuth(self._args.access_token, '')
         data = {
-            'channel_tag': self._channel,
+            'channel_tag': self._args.channel,
             'type': 'note',
             'title': title,
             'body': body,
@@ -91,7 +91,7 @@ if __name__ == '__main__':
         help='Pushbullet channel to push notifications to',
     )
     parser.add_argument(
-        'access-token',
+        'access_token',
         metavar='ACCESS_TOKEN',
         help='Pushbullet access token for authentication',
     )
