@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import bs4
 import json
