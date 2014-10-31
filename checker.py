@@ -40,14 +40,18 @@ class Nexus6Checker:
             for name, id in self.STORE_PRODUCT_IDS.items():
                 self._logger.debug('Checking %s...', name)
                 old = self._inventory.get(id, None)
-                new = self._check_product_inventory(id).strip()
-                if old is not None and old != new:
-                    self._logger.info('Change detected in %s!', name)
-                    self._push_message(
-                        'Page Content Has Changed!',
-                        'The inventory of the %s now states: "%s"' % (name, new),
-                    )
-                self._inventory[id] = new
+                try:
+                    new = self._check_product_inventory(id).strip()
+                except Exception as e:
+                    self._logger.exception(e)
+                else:
+                    if old is not None and old != new:
+                        self._logger.info('Change detected in %s!', name)
+                        self._push_message(
+                            'Page Content Has Changed!',
+                            'The inventory of the %s now states: "%s"' % (name, new),
+                        )
+                    self._inventory[id] = new
                 # Prevent too many simultaneous requests
                 time.sleep(1)
             time.sleep(self._args.interval)
