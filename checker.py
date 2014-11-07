@@ -61,7 +61,7 @@ class Nexus6Checker:
         """
         Retrieve the inventory text for the specified product.
         """
-        req = requests.get(self.STORE_BASE_URL % id)
+        req = requests.get(self.STORE_BASE_URL % id, timeout=5)
         soup = bs4.BeautifulSoup(req.content)
         inv = soup.find_all('div', class_='inventory-info', limit=1)
         return inv[0].get_text() if len(inv) else '[Inventory Removed]'
