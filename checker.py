@@ -50,6 +50,7 @@ class Nexus6Checker:
                         self._push_message(
                             'Page Content Has Changed!',
                             'The inventory of the %s now states: "%s"' % (name, new),
+                            self.STORE_BASE_URL % id,
                         )
                     self._inventory[id] = new
                 # Prevent too many simultaneous requests
@@ -65,16 +66,17 @@ class Nexus6Checker:
         inv = soup.find_all('div', class_='inventory-info', limit=1)
         return inv[0].get_text() if len(inv) else '[Inventory Removed]'
 
-    def _push_message(self, title, body):
+    def _push_message(self, title, body, url):
         """
         Push the specified message to the Pushbullet channel.
         """
         auth = requests.auth.HTTPBasicAuth(self._args.access_token, '')
         data = {
             'channel_tag': self._args.channel,
-            'type': 'note',
+            'type': 'link',
             'title': title,
             'body': body,
+            'url': url,
         }
         headers = {'content-type': 'application/json'}
         req = requests.post(self.PUSH_URL, auth=auth, data=json.dumps(data), headers=headers)
